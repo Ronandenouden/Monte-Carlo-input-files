@@ -1,4 +1,5 @@
 The input files for MCNP end with the extension .inp
+
 The input files for TOPAS are .txt files
 
 The input files for MCNP use the source spectrum which was used in chapter 4 of the report. To change to the source spectrum from chapter 3 one needs to replace:
@@ -11,6 +12,7 @@ SI1 H 0.0 0.004399 0.007798 0.011197 0.014595 0.017994 &
  0.898301 1.23819 1.57807 1.91796 2.25785 2.59773 &
  2.93762 3.27751 3.61739 3.95728 4.29717 4.63705 &
  4.97694 5.31683 5.65671 5.99929
+ 
 SP1 D 0.0 0.0 0.0 0.0 0.0 0.0 &
  0.0 0.0 0.0 0.0 0.0 0.0 &
  0.0 0.0 0.0 0.0 0.001600345283554729 0.006762336689043935 &
@@ -28,4 +30,5 @@ SP1 D 0.0 0.0 0.0 0.0 0.0 0.0 &
  With :
 
  SI1 H 0.  1.0 6.0
+ 
  SP1 D 0.  0.0 1.0
