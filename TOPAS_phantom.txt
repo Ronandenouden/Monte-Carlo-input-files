@@ -1,0 +1,284 @@
+#setting seed
+i:Ts/NumberOfThreads = 40
+i:Ts/Seed = 1
+
+#defining physics
+s:Ph/ListName = "default"
+b:Ph/ListProcesses = "False"
+s:Ph/default/Type = "Geant4_Modular"
+sv:Ph/default/Modules = 6  "g4stopping" "g4h-elastic_HP" "g4ion-binarycascade" "g4h-phy_QGSP_BIC_HP" "g4decay" "g4em-standard_opt4"
+d:Ph/default/EMRangeMin = 100. eV
+
+#define water as other program such that it is HU = 0
+#making water comp
+sv:Ma/Waterhu0/Components = 7 "Hydrogen" "Carbon" "Nitrogen" "Oxygen" "Phosphorus" "Sulfur" "Chlorine"
+uv:Ma/Waterhu0/Fractions = 7 0.108 0.356 0.022 0.509 0.001 0.002 0.002
+d:Ma/Waterhu0/Density = 1.018 g/cm3
+
+#making bone comp
+sv:Ma/Bonehu1200/Components = 9 "Hydrogen" "Carbon" "Nitrogen" "Oxygen" "Sodium" "Magnesium" "Phosphorus" "Sulfur" "Calcium"
+uv:Ma/Bonehu1200/Fractions = 9 0.045 0.21 0.039 0.42 0.001 0.002 0.088 0.003 0.192
+d:Ma/Bonehu1200/Density = 1.7274 g/cm3
+
+#making lung com
+sv:Ma/Lunghumin600/Components = 9 "Hydrogen" "Carbon" "Nitrogen" "Oxygen" "Sodium" "Phosphorus" "Sulfur" "Chlorine" "Potassium"
+uv:Ma/Lunghumin600/Fractions = 9 0.103 0.105 0.031 0.749 0.002 0.002 0.003 0.003 0.002
+d:Ma/Lunghumin600/Density = 0.413090266075388 g/cm3
+
+#making world (30x30x30cm^3)
+s:Ge/World/Type = "TsBox"
+s:Ge/World/Material = "Vacuum"
+d:Ge/World/HLX = 0.15 m # Half Length
+d:Ge/World/HLY = 0.15 m
+d:Ge/World/HLZ = 0.15 m
+d:Ge/World/TransX = 0. m
+d:Ge/World/TransY = 0. m
+d:Ge/World/TransZ = 0. m
+d:Ge/World/RotX = 0. deg
+d:Ge/World/RotY = 0. deg
+d:Ge/World/RotZ = 0. deg
+
+#making first slab (10 cm water)
+s:Ge/slab1/Type     = "TsBox"
+s:Ge/slab1/Material = "Waterhu0"
+s:Ge/slab1/Parent   = "World"
+d:Ge/slab1/HLX      = 0.15 m
+d:Ge/slab1/HLY      = 0.15 m
+d:Ge/slab1/HLZ      = 0.05 m
+d:Ge/slab1/TransX   = 0. m
+d:Ge/slab1/TransY   = 0. m
+d:Ge/slab1/TransZ   = 0.1 m
+d:Ge/slab1/RotX     = 0. deg
+d:Ge/slab1/RotY     = 0. deg
+d:Ge/slab1/RotZ     = 0. deg
+
+#making second slab (2 cm bone)
+s:Ge/slab2/Type     = "TsBox"
+s:Ge/slab2/Material = "Bonehu1200"
+s:Ge/slab2/Parent   = "World"
+d:Ge/slab2/HLX      = 0.15 m
+d:Ge/slab2/HLY      = 0.15 m
+d:Ge/slab2/HLZ      = 0.01 m
+d:Ge/slab2/TransX   = 0. m
+d:Ge/slab2/TransY   = 0. m
+d:Ge/slab2/TransZ   = 0.04 m
+d:Ge/slab2/RotX     = 0. deg
+d:Ge/slab2/RotY     = 0. deg
+d:Ge/slab2/RotZ     = 0. deg
+
+#making third slab (8 cm lung)
+s:Ge/slab3/Type     = "TsBox"
+s:Ge/slab3/Material = "Lunghumin600"
+s:Ge/slab3/Parent   = "World"
+d:Ge/slab3/HLX      = 0.15 m
+d:Ge/slab3/HLY      = 0.15 m
+d:Ge/slab3/HLZ      = 0.04 m
+d:Ge/slab3/TransX   = 0. m
+d:Ge/slab3/TransY   = 0. m
+d:Ge/slab3/TransZ   = -0.01 m
+d:Ge/slab3/RotX     = 0. deg
+d:Ge/slab3/RotY     = 0. deg
+d:Ge/slab3/RotZ     = 0. deg
+
+#making fourth slab (10 cm water)
+s:Ge/slab4/Type     = "TsBox"
+s:Ge/slab4/Material = "Waterhu0"
+s:Ge/slab4/Parent   = "World"
+d:Ge/slab4/HLX      = 0.15 m
+d:Ge/slab4/HLY      = 0.15 m
+d:Ge/slab4/HLZ      = 0.05 m
+d:Ge/slab4/TransX   = 0. m
+d:Ge/slab4/TransY   = 0. m
+d:Ge/slab4/TransZ   = -0.1 m
+d:Ge/slab4/RotX     = 0. deg
+d:Ge/slab4/RotY     = 0. deg
+d:Ge/slab4/RotZ     = 0. deg
+
+#making score volume for depth dose (0.5x0.5x30cm)
+s:Ge/depthscore/Type     = "TsBox"
+s:Ge/depthscore/Parent   = "World"
+d:Ge/depthscore/HLX      = 0.0025 m
+d:Ge/depthscore/HLY      = 0.0025 m
+d:Ge/depthscore/HLZ      = 0.15 m
+d:Ge/depthscore/TransX   = 0. m
+d:Ge/depthscore/TransY   = 0. m
+d:Ge/depthscore/TransZ   = 0. m
+d:Ge/depthscore/RotX     = 0. deg
+d:Ge/depthscore/RotY     = 0. deg
+d:Ge/depthscore/RotZ     = 0. deg
+i:Ge/depthscore/XBins    = 1
+i:Ge/depthscore/YBins    = 1
+b:Ge/depthscore/IsParallel = "True"
+
+#making score volume for cross section z=5 (30x0.5x0.5cm)
+s:Ge/dose5/Type     = "TsBox"
+s:Ge/dose5/Parent   = "World"
+d:Ge/dose5/HLX      = 0.15 m
+d:Ge/dose5/HLY      = 0.0025 m
+d:Ge/dose5/HLZ      = 0.0025 m
+d:Ge/dose5/TransX   = 0. m
+d:Ge/dose5/TransY   = 0. m
+d:Ge/dose5/TransZ   = 0.1 m
+d:Ge/dose5/RotX     = 0. deg
+d:Ge/dose5/RotY     = 0. deg
+d:Ge/dose5/RotZ     = 0. deg
+i:Ge/dose5/ZBins    = 1
+i:Ge/dose5/YBins    = 1
+b:Ge/dose5/IsParallel = "True"
+
+#making score volume for cross section z=11 (30x0.5x0.5cm)
+s:Ge/dose11/Type     = "TsBox"
+s:Ge/dose11/Parent   = "World"
+d:Ge/dose11/HLX      = 0.15 m
+d:Ge/dose11/HLY      = 0.0025 m
+d:Ge/dose11/HLZ      = 0.0025 m
+d:Ge/dose11/TransX   = 0. m
+d:Ge/dose11/TransY   = 0. m
+d:Ge/dose11/TransZ   = 0.04 m
+d:Ge/dose11/RotX     = 0. deg
+d:Ge/dose11/RotY     = 0. deg
+d:Ge/dose11/RotZ     = 0. deg
+i:Ge/dose11/ZBins    = 1
+i:Ge/dose11/YBins    = 1
+b:Ge/dose11/IsParallel = "True"
+
+#making score volume for cross section z=16 (30x0.5x0.5cm)
+s:Ge/dose16/Type     = "TsBox"
+s:Ge/dose16/Parent   = "World"
+d:Ge/dose16/HLX      = 0.15 m
+d:Ge/dose16/HLY      = 0.0025 m
+d:Ge/dose16/HLZ      = 0.0025 m
+d:Ge/dose16/TransX   = 0. m
+d:Ge/dose16/TransY   = 0. m
+d:Ge/dose16/TransZ   = -0.01 m
+d:Ge/dose16/RotX     = 0. deg
+d:Ge/dose16/RotY     = 0. deg
+d:Ge/dose16/RotZ     = 0. deg
+i:Ge/dose16/ZBins    = 1
+i:Ge/dose16/YBins    = 1
+b:Ge/dose16/IsParallel = "True"
+
+#making score volume for cross section z=25 (30x0.5x0.5cm)
+s:Ge/dose25/Type     = "TsBox"
+s:Ge/dose25/Parent   = "World"
+d:Ge/dose25/HLX      = 0.15 m
+d:Ge/dose25/HLY      = 0.0025 m
+d:Ge/dose25/HLZ      = 0.0025 m
+d:Ge/dose25/TransX   = 0. m
+d:Ge/dose25/TransY   = 0. m
+d:Ge/dose25/TransZ   = -0.1 m
+d:Ge/dose25/RotX     = 0. deg
+d:Ge/dose25/RotY     = 0. deg
+d:Ge/dose25/RotZ     = 0. deg
+i:Ge/dose25/ZBins    = 1
+i:Ge/dose25/YBins    = 1
+b:Ge/dose25/IsParallel = "True"
+
+#making beam position
+s:Ge/beampos/Parent = "World"
+s:Ge/beampos/Type = "Group"
+d:Ge/beampos/TransX = 0. m
+d:Ge/beampos/TransY = 0. m
+d:Ge/beampos/TransZ = 0.15 m
+d:Ge/beampos/RotX = 180. deg
+d:Ge/beampos/RotY = 0. deg
+d:Ge/beampos/RotZ = 0. deg
+
+#making source
+s:So/mybeam/Type = "Beam"
+s:So/mybeam/BeamParticle = "gamma"
+i:So/mybeam/NumberOfHistoriesInRun = 1000000000
+s:So/mybeam/BeamEnergySpectrumType = "continuous"
+dv:So/mybeam/BeamEnergySpectrumValues = 46 0.0 0.004399 0.007798 0.011197 0.014595 0.017994 0.021393 0.024792 0.028191 0.03159 0.034989 0.038388 0.041786 0.045185 0.048584 0.082573 0.116561 0.15055 0.184539 0.218527 0.252516 0.286505 0.320493 0.354482 0.388471 0.422459 0.456448 0.490437 0.524425 0.558414 0.898301 1.23819 1.57807 1.91796 2.25785 2.59773 2.93762 3.27751 3.61739 3.95728 4.29717 4.63705 4.97694 5.31683 5.65671 5.99929  MeV
+uv:So/mybeam/BeamEnergySpectrumWeights = 46 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.001600345283554729 0.006762336689043935 0.009361315212062208 0.011112918808017335 0.012418149036950765 0.013428396268425504 0.014223607215763174 0.014854194185849365 0.015352052166342067 0.015740943514449872 0.016040188182057602 0.016262355396380712 0.016418576092891733 0.01651941207663537 0.16252190591244028 0.14426901360351999 0.11959331238658175 0.09565558625720386 0.07483307389231106 0.05766796409613803 0.043961205928674175 0.03323553666275802 0.024963817833023802 0.018654291373102642 0.013879286680605686 0.010289243583626036 0.007605001896559481 0.005606086440513044 0.004123043175280581 0.0030468401492370904
+s:So/mybeam/BeamPositionDistribution = "Flat"
+s:So/mybeam/BeamPositionCutoffShape = "Rectangle"
+d:So/mybeam/BeamPositionCutoffX = 0.05 m
+d:So/mybeam/BeamPositionCutoffY = 0.05 m
+d:Sc/mybeam/BeamAngularCutoffX = 90. deg
+d:Sc/mybeam/BeamAngularCutoffY = 90. deg
+s:So/mybeam/BeamAngularDistribution = "None"
+s:So/mybeam/Component = "beampos"
+
+#scoring depthdose
+s:Sc/1depthdose/Quantity = "EnergyDeposit"
+s:Sc/1depthdose/Component = "depthscore"
+b:Sc/1depthdose/OutputToConsole = "false"
+s:Sc/1depthdose/IfOutputFileAlreadyExists = "Overwrite"
+sv:Sc/1depthdose/Report = 1 "Mean"
+i:Sc/1depthdose/Ebins = 1
+d:Sc/1depthdose/EbinMin = 0.0 MeV
+d:Sc/1depthdose/EbinMax = 6.05 MeV
+i:Sc/1depthdose/Zbins = 120
+d:Sc/1depthdose/ZbinMin = 0.15 m
+d:Sc/1depthdose/ZbinMax = -0.15 m
+s:Sc/1depthdose/OutputType = "csv"
+
+#scoring dose z=5
+s:Sc/1dosez5/Quantity = "EnergyDeposit"
+s:Sc/1dosez5/Component = "dose5"
+b:Sc/1dosez5/OutputToConsole = "false"
+s:Sc/1dosez5/IfOutputFileAlreadyExists = "Overwrite"
+sv:Sc/1dosez5/Report = 1 "Mean"
+i:Sc/1dosez5/Ebins = 1
+d:Sc/1dosez5/EbinMin = 0.0 MeV
+d:Sc/1dosez5/EbinMax = 6.05 MeV
+i:Sc/1dosez5/Xbins = 120
+d:Sc/1dosez5/XbinMin = 0.15 m
+d:Sc/1dosez5/XbinMax = -0.15 m
+s:Sc/1dosez5/OutputType = "csv"
+
+#scoring dose z=11
+s:Sc/1dosez11/Quantity = "EnergyDeposit"
+s:Sc/1dosez11/Component = "dose11"
+b:Sc/1dosez11/OutputToConsole = "false"
+s:Sc/1dosez11/IfOutputFileAlreadyExists = "Overwrite"
+sv:Sc/1dosez11/Report = 1 "Mean"
+i:Sc/1dosez11/Ebins = 1
+d:Sc/1dosez11/EbinMin = 0.0 MeV
+d:Sc/1dosez11/EbinMax = 6.05 MeV
+i:Sc/1dosez11/Xbins = 120
+d:Sc/1dosez11/XbinMin = 0.15 m
+d:Sc/1dosez11/XbinMax = -0.15 m
+s:Sc/1dosez11/OutputType = "csv"
+
+#scoring dose z=16
+s:Sc/1dosez16/Quantity = "EnergyDeposit"
+s:Sc/1dosez16/Component = "dose16"
+b:Sc/1dosez16/OutputToConsole = "false"
+s:Sc/1dosez16/IfOutputFileAlreadyExists = "Overwrite"
+sv:Sc/1dosez16/Report = 1 "Mean"
+i:Sc/1dosez16/Ebins = 1
+d:Sc/1dosez16/EbinMin = 0.0 MeV
+d:Sc/1dosez16/EbinMax = 6.05 MeV
+i:Sc/1dosez16/Xbins = 120
+d:Sc/1dosez16/XbinMin = 0.15 m
+d:Sc/1dosez16/XbinMax = -0.15 m
+s:Sc/1dosez16/OutputType = "csv"
+
+#scoring dose z=25
+s:Sc/1dosez25/Quantity = "EnergyDeposit"
+s:Sc/1dosez25/Component = "dose25"
+b:Sc/1dosez25/OutputToConsole = "false"
+s:Sc/1dosez25/IfOutputFileAlreadyExists = "Overwrite"
+sv:Sc/1dosez25/Report = 1 "Mean"
+i:Sc/1dosez25/Ebins = 1
+d:Sc/1dosez25/EbinMin = 0.0 MeV
+d:Sc/1dosez25/EbinMax = 6.05 MeV
+i:Sc/1dosez25/Xbins = 120
+d:Sc/1dosez25/XbinMin = 0.15 m
+d:Sc/1dosez25/XbinMax = -0.15 m
+s:Sc/1dosez25/OutputType = "csv"
+
+#pause
+b:Ts/PauseBeforeQuit = "False"
+i:Ts/ShowHistoryCountAtInterval = 1000000
+i:Tf/NumberOfSequentialTimes = 4
+
+
+
+
+
+
+
+
